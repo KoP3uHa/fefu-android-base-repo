@@ -5,15 +5,12 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.fefu.activitytracker.R
+import ru.fefu.activitytracker.activity.adapters.ListItemAdapter
 import ru.fefu.activitytracker.databinding.UserActivitiesBinding
-import ru.fefu.activitytracker.activity.adapters.UserListAdapter
-import ru.fefu.activitytracker.activity.cards.ICard
-import ru.fefu.activitytracker.activity.cards.UserCardsRepository
 
 class UserActivities : Base<UserActivitiesBinding>(R.layout.user_activities) {
 
-    private val repo = UserCardsRepository()
-    private val usersListAdapter = UserListAdapter(repo.getUsersCards() as List<ICard>)
+    private val usersListAdapter = ListItemAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,7 +20,7 @@ class UserActivities : Base<UserActivitiesBinding>(R.layout.user_activities) {
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        usersListAdapter.setCardClickListener {
+        usersListAdapter.serItemClickListener {
             val action = ActivitiesDirections.actionActivityMainFragmentToUserInfoFragment()
             findNavController().navigate(action)
         }

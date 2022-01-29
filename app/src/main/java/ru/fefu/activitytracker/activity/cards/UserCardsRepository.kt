@@ -1,30 +1,25 @@
 package ru.fefu.activitytracker.activity.cards
 
-import ru.fefu.activitytracker.activity.cards.DateCard
-import ru.fefu.activitytracker.activity.cards.ICard
-import ru.fefu.activitytracker.activity.cards.MyCard
-import ru.fefu.activitytracker.activity.cards.UserCard
-
 class UserCardsRepository {
     private val cardslist = listOf(
-        DateCard(
+        ListItem.DateCard(
             "Вчера"
         ),
-        UserCard(
+        ListItem.UserCard(
             "14.32 км",
             "@van_darkholme",
             "2 часа 46 минут",
             "Сёрфинг",
             "14 часов назад"
         ),
-        UserCard(
+        ListItem.UserCard(
             "228 м",
             "@techniquepasha",
             "14 часов 48 минут",
             "Качели",
             "14 часов назад"
         ),
-        UserCard(
+        ListItem.UserCard(
             "10 км",
             "@morgen_shtern",
             "1 час 10 минут",

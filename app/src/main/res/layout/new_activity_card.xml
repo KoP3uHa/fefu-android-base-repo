@@ -7,7 +7,7 @@
     android:layout_marginHorizontal="8dp"
     android:focusable="true"
     app:strokeWidth="2dp"
-    app:strokeColor="@color/purple_500"
+    app:strokeColor="@color/grey"
     app:cardCornerRadius="14dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout

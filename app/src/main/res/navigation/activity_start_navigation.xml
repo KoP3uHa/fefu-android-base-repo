@@ -10,7 +10,11 @@
         android:label="ActivityStartFragment">
         <action
             android:id="@+id/action_activityStartFragment_to_activityTrackFragment"
-            app:destination="@id/activityTrackFragment"/>
+            app:destination="@id/activityTrackFragment">
+            <argument
+                android:name = "ActivityType"
+                app:argType="ru.fefu.activitytracker.map.cards.TypeCardName"/>
+        </action>
     </fragment>
 
     <fragment

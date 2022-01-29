@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import ru.fefu.activitytracker.App
 import ru.fefu.activitytracker.R
+import ru.fefu.activitytracker.activity.adapters.ListItemAdapter
+import ru.fefu.activitytracker.activity.cards.ListItem
+import ru.fefu.activitytracker.activity.room.calc.toDateSeparator
 import ru.fefu.activitytracker.databinding.PersonalActivitiesBinding
-import ru.fefu.activitytracker.activity.adapters.MyListAdapter
-import ru.fefu.activitytracker.activity.cards.ICard
-import ru.fefu.activitytracker.activity.cards.PersonalCardsRepository
 
 class PersonalActivities : Base<PersonalActivitiesBinding>(R.layout.personal_activities) {
 
-    private val repo = PersonalCardsRepository()
-    private val myListAdapter = MyListAdapter(repo.getMyCards() as List<ICard>)
+    private val myListAdapter = ListItemAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,9 +23,31 @@ class PersonalActivities : Base<PersonalActivitiesBinding>(R.layout.personal_act
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        myListAdapter.setCardClickListener {
+        myListAdapter.serItemClickListener {
             val action = ActivitiesDirections.actionActivityMainFragmentToMyInfoFragment()
             findNavController().navigate(action)
+        }
+
+        App.INSTANCE.db.activityDao().getAll().observe(viewLifecycleOwner) { activitiesList ->
+            val activitiesMap = mutableMapOf<String, MutableList<ListItem.MyCard>>()
+
+            activitiesList.forEach {
+                if (!activitiesMap.containsKey(it.finish.toDateSeparator())) {
+                    activitiesMap[it.finish.toDateSeparator()] = mutableListOf()
+                }
+
+                activitiesMap[it.finish.toDateSeparator()]?.add(it.toMyCard())
+            }
+
+            val packedList = mutableListOf<ListItem>()
+
+            activitiesMap.forEach { (dateSeparatorContent, myActivitiesList) ->
+                packedList.add(ListItem.DateCard(dateSeparatorContent))
+                myActivitiesList.forEach {
+                    packedList.add(it)
+                }
+            }
+            myListAdapter.submitList(packedList)
         }
     }
 }

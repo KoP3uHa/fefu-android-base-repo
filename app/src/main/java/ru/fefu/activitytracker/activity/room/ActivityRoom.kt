@@ -12,20 +12,30 @@ import java.time.LocalDateTime
 @Entity (tableName = "my_database")
 data class ActivityRoom(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo(name = "type") val type: Int,
+    val type: TypeCardName,
     @ColumnInfo(name = "start_time") val start: LocalDateTime,
-    @ColumnInfo(name = "finish") val finish: LocalDateTime,
-    @ColumnInfo(name = "coords") val coords: List<Pair<Double, Double>>
+    @ColumnInfo(name = "finish") val finish: LocalDateTime?,
+    val coords: List<Pair<Double, Double>>
 ) {
     fun toMyCard(): ListItem.MyCard {
         return ListItem.MyCard(
             id,
-            TypeCardName.values()[type].type,
+            type.type,
             coords.getDistance().toFormattedDistance(),
             Duration.between(start, finish).toFormattedDurationBetween(),
-            finish.toFinishDateOrTime(),
+            finish!!.toFinishDateOrTime(),
             start.toTime(),
             finish.toTime(),
         )
     }
 }
+
+data class DistanceUpdate(
+    val id: Int,
+    val coords: List<Pair<Double, Double>>,
+)
+
+data class FinishTimeUpdate(
+    val id: Int,
+    @ColumnInfo(name = "finish") val finish: LocalDateTime?,
+)

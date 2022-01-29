@@ -12,8 +12,14 @@
             android:id="@+id/action_activityStartFragment_to_activityTrackFragment"
             app:destination="@id/activityTrackFragment">
             <argument
-                android:name = "ActivityType"
-                app:argType="ru.fefu.activitytracker.map.cards.TypeCardName"/>
+                android:name="activityId"
+                app:argType="integer"
+                />
+            <argument
+                android:name="reassembled"
+                app:argType="boolean"
+                android:defaultValue="false"
+                />
         </action>
     </fragment>
 

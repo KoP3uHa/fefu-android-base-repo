@@ -1,12 +1,11 @@
-package screens.activity
+package ru.fefu.activitytracker.activity
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.findNavController
 import ru.fefu.activitytracker.R
-import ru.fefu.activitytracker.activity.Base
 import ru.fefu.activitytracker.databinding.PersonalActivityInfoBinding
 
 class PersonalCardInfo : Base<PersonalActivityInfoBinding>(R.layout.personal_activity_info) {
@@ -23,7 +22,7 @@ class PersonalCardInfo : Base<PersonalActivityInfoBinding>(R.layout.personal_act
         super.onViewCreated(view, savedInstanceState)
 
         binding.myInfoToolbar.setNavigationOnClickListener {
-            parentFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            findNavController().popBackStack()
         }
     }
 

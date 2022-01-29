@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.fefu.activitytracker.R
 import ru.fefu.activitytracker.databinding.ActivityTabsBinding
-import  ru.fefu.activitytracker.activity.adapters.ViewAdapter
+import ru.fefu.activitytracker.activity.adapters.ViewAdapter
+import ru.fefu.activitytracker.map.MapActivity
 
 class Activities : Base<ActivityTabsBinding>(R.layout.activity_tabs) {
 
@@ -34,5 +36,13 @@ class Activities : Base<ActivityTabsBinding>(R.layout.activity_tabs) {
         }.attach()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.activityButton.setOnClickListener() {
+            val action = ActivitiesDirections.actionActivityMainFragmentToActivityMap()
+            findNavController().navigate(action)
+        }
     }
 }

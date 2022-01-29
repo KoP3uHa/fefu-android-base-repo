@@ -2,6 +2,7 @@ package ru.fefu.activitytracker.activity
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.fefu.activitytracker.R
 import ru.fefu.activitytracker.databinding.UserActivitiesBinding
@@ -23,24 +24,8 @@ class UserActivities : Base<UserActivitiesBinding>(R.layout.user_activities) {
         }
 
         usersListAdapter.setCardClickListener {
-            val fragmentManager = parentFragment?.parentFragmentManager
-            val currentFragment = fragmentManager?.findFragmentByTag("UserCardInfo")
-            val activityFragment = fragmentManager?.findFragmentByTag("activity")
-            fragmentManager?.beginTransaction()?.apply {
-                if (currentFragment != null) {
-                    detach(currentFragment)
-                }
-                add(
-                    R.id.fragment_container,
-                    UserCardInfo(),
-                    "UserCardInfo"
-                )
-                if (activityFragment != null){
-                    detach(activityFragment)
-                }
-                addToBackStack("UserCardInfo")
-                commit()
-            }
+            val action = ActivitiesDirections.actionActivityMainFragmentToUserInfoFragment()
+            findNavController().navigate(action)
         }
     }
 }

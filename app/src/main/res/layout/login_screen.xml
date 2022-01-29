@@ -81,7 +81,7 @@
 
 
         android:contentDescription="@string/riders_image_description"
-        android:src="@drawable/welcome_screen_image"
+        android:src="@drawable/ic_login_riders"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
